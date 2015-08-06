@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Seasons</title>
+    <script src="js/vendor/modernizr.js"></script>
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-EZ60HtEGkXZln6vXC9DygefNIn6k_lk">
+
+    </script>
+
+    <style>
+        .image-holder{
+            display: inline-block;
+            padding: 0;
+            font-size:0;
+
+        }
+        .row{
+            padding: 0;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
+            font-size:0;
+        }
+        img{
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="row">
+    <div class="image-holder" id="image1"></div>
+    <div  class="image-holder"  id="image2"></div>
+    <div  class="image-holder" id="image3"></div>
+    <div  class="image-holder" id="image4"></div>
+</div>
+<div class="row">
+    <div  class="image-holder" id="image5"></div>
+    <div  class="image-holder" id="image6"></div>
+    <div  class="image-holder" id="image7"></div>
+    <div class="image-holder"  id="image8"></div>
+</div>
+<div class="row">
+    <div  class="image-holder" id="image9"></div>
+    <div  class="image-holder" id="image10"></div>
+    <div class="image-holder"  id="image11"></div>
+    <div class="image-holder"  id="image12"></div>
+</div>
+<div class="row">
+    <div  class="image-holder" id="image13"></div>
+    <div  class="image-holder" id="image14"></div>
+    <div class="image-holder"  id="image15"></div>
+    <div class="image-holder"  id="image16"></div>
+</div>
+
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+    photo_ids = [0,0,0,
+                0,0,0,
+                0,0,0];
+    var sv;
+
+    function tryCords(lat, lng, index, season) {
+        sv.getPanoramaByLocation({lat: lat, lng: lng}, 1000000,
+                function (pano, status) {
+                    if  (status != google.maps.StreetViewStatus.OK || !pano.imageDate) {
+                        setTimeout(function(){ getPhoto(season, index);}, 100);
+                        return;
+                    }
+
+                    photo_ids[index] = pano.location.pano;
+
+                    $("#image"+ (index+1)).prepend(
+                    "<img src=\"https://maps.googleapis.com/maps/api/streetview?size=300x300&pano=" + pano.location.pano + "\">");
+                }
+        );
+    }
+
+
+    function getPhoto(season, index) {
+        lat = Math.random() * 90 * 2 - 90;
+        lng = Math.random() * 180 * 2 - 180;
+
+        tryCords(lat, lng, index, season);
+    }
+
+    // will get called when all the elements are populated
+    $( window ).load(function () {
+        sv = new google.maps.StreetViewService();
+        for(var i = 0; i < 16; ++i) {
+            getPhoto(0,i);
+        }
+    });
+
+    $(document).foundation();
+</script>
+</body>
+</html>
