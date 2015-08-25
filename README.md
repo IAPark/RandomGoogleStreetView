@@ -1,4 +1,4 @@
 # RandomGoogleStreetView
-A project for class to randomly generate a clection of 16 Google Street View Images
+A project for class to randomly generate a clection of 16 Google Street View Images because why not and because I took an art class.
 
-It doesn't do anything special.
+See it in [action](http://street-view-art.isaacpark.me.)
